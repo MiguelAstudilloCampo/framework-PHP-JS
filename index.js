@@ -30,6 +30,21 @@ function eliminarClase (id){
 
 }
 
+function agregarClase() {
+    const id = document.getElementById('id').value;
+    const nombre = document.getElementById('nombre').value;
+    const descripcion = document.getElementById('descripcion').value;
+
+    fetch(`./Controller/agregarClaseController.php?id=${id}&nombre=${nombre}&descripcion=${descripcion}`)
+    .then((response) => {
+        return response.text();
+    })
+    .then((data) => {
+        console.log (data)
+        
+    })
+}
+
 
 cargarDatos()
 

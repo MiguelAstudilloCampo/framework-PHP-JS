@@ -65,6 +65,21 @@ class ProductoDAO{
             echo "error al conectar a la base de datos ======>".$e->getMessage();
         }
     }
+    function agregarClases($id, $nombre, $descripcion) {
+        $conexion = new Conexion('localhost', 'root', '', 'MiguelBd');
+        try {
+            $conn = $conexion->Conectar(); 
+            $agregar = $conn->prepare("INSERT INTO electrodomesticos (`id`, `nombre`, `descripcion`) VALUES (?, ?, ?)");
+            $agregar->bindParam(1, $id);
+            $agregar->bindParam(2, $nombre);
+            $agregar->bindParam(3, $descripcion);
+            $agregar->execute();
+            return "Agregado Exitosamente";
+        } catch(PDOException $e) {
+            return "Error al conectar a la base de datos: " . $e->getMessage();
+        }
+    } 
+}
 
 
 // $conexion = new Conexion('localhost', 'root', '', 'MiguelBd');
