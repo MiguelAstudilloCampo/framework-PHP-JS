@@ -70,13 +70,15 @@
               <div class="container mt-3">
                 <form action="/action_page.php">
                   <div class="mb-3 mt-3 d-flex flex-column gap-2">
-                    <label for="">Id:</label>
+                    <label for=""></label>
                     <input
                       type="number"
                       class="form-control"
                       id="id"
                       placeholder="Ingresa tu codigo"
                       name="id"
+                      hidden
+                      
                     />
                   </div>
                   <div class="mb-3 mt-3 d-flex flex-column gap-2">
@@ -96,7 +98,6 @@
                       class="form-control desc"
                       id="descripcion"
                       placeholder="Ingresa la descripcion de tu electrodomestico"
-                      
                     />
                   </div>
                   <div class="modal-footer">
@@ -107,13 +108,8 @@
                     >
                       Cerrar
                     </button>
-                    <button
-                      type="button"
-                      class="btn btn-primary"
-                      onclick="agregarClase()"
-                    >
-                      Guardar Cambios
-                    </button>
+                    <button id="Guardar" type="button" data-bs-dismiss="modal" class="btn btn-primary" onclick="agregarClase()">Guardar Cambios</button>
+
                   </div>
                 </form>
               </div>

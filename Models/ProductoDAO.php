@@ -65,7 +65,7 @@ class ProductoDAO{
             echo "error al conectar a la base de datos ======>".$e->getMessage();
         }
     }
-    function agregarClases($id, $nombre, $descripcion) {
+    function agregarClases($id,$nombre, $descripcion) {
         $conexion = new Conexion('localhost', 'root', '', 'MiguelBd');
         try {
             $conn = $conexion->Conectar(); 
@@ -79,6 +79,46 @@ class ProductoDAO{
             return "Error al conectar a la base de datos: " . $e->getMessage();
         }
     } 
+
+    function TraerClase ($id){
+        $conexion = new Conexion ('localhost', 'root', '', 'MiguelBd');
+        try {
+            $conn = $conexion->Conectar();
+            $stmt = $conn->query("SELECT * FROM electrodomesticos WHERE id={$id}");
+            $rows = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $rows;
+            $conexion->cerrarConexion();
+        } catch(PDOException $e) {
+            echo "error al conectar a la base de datos ======>".$e->getMessage();
+        }
+    }
+
+    //funcion guardar y actualizar
+
+    // function guardarClase($nombre, $descripcion) {
+    //     $conexion = new Conexion('localhost', 'root', '', 'MiguelBd');
+    //     try {
+    //         $conn = $conexion->Conectar(); 
+    //         $agregar = $conn->prepare("INSERT INTO electrodomesticos (nombre, descripcion) VALUES ('$nombre', '$descripcion')");
+    //         $agregar->execute();
+    //         return "Agregado Exitosamente";
+    //     } catch(PDOException $e) {
+    //         return "Error al conectar a la base de datos: " . $e->getMessage();
+    //     }
+    // }
+
+    function actualizarClase($id, $nombre, $descripcion) {
+        $conexion = new Conexion('localhost', 'root', '', 'MiguelBd');
+        try {
+            $conn = $conexion->Conectar(); 
+            $agregar = $conn->prepare("UPDATE electrodomesticos SET nombre='$nombre', descripcion='$descripcion' WHERE id =$id");
+            $agregar->execute();
+            return "Actualizado Exitosamente";
+        } catch(PDOException $e) {
+            return "Error al conectar a la base de datos: " . $e->getMessage();
+        }
+    }
+    
 }
 
 
