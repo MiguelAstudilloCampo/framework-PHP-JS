@@ -78,7 +78,6 @@
                       placeholder="Ingresa tu codigo"
                       name="id"
                       hidden
-                      
                     />
                   </div>
                   <div class="mb-3 mt-3 d-flex flex-column gap-2">
@@ -108,8 +107,16 @@
                     >
                       Cerrar
                     </button>
-                    <button id="Guardar" type="button" data-bs-dismiss="modal" class="btn btn-primary" onclick="agregarClase()">Guardar Cambios</button>
 
+                    <button
+                      id="Guardar"
+                      type="button"
+                      data-bs-dismiss="modal"
+                      class="btn btn-primary"
+                      onclick="agregarClase()"
+                    >
+                      Guardar Cambios
+                    </button>
                   </div>
                 </form>
               </div>
@@ -118,7 +125,16 @@
           </div>
         </div>
       </div>
+      <div class=" text-center col-5 alert alert-success" id="alerMessange" hidden role="alert">
+      </div>
+
     </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 
     <script
       type="module"

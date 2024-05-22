@@ -1,3 +1,23 @@
+const alertPlaceholder = document.getElementById("liveAlertPlaceholder");
+const appendAlert = (message, type) => {
+  const wrapper = document.createElement("div");
+  wrapper.innerHTML = [
+    `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+    `   <div>${message}</div>`,
+    '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+    "</div>",
+  ].join("");
+
+  alertPlaceholder.append(wrapper);
+};
+
+const alertTrigger = document.getElementById("liveAlertBtn");
+if (alertTrigger) {
+  alertTrigger.addEventListener("click", () => {
+    appendAlert("Nice, you triggered this alert message!", "success");
+  });
+}
+
 function cargarDatos() {
   fetch("./Controller/traerClasesController.php")
     .then((response) => response.json())
@@ -7,19 +27,38 @@ function cargarDatos() {
       data.forEach((row) => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
-                <td>${row.id}</td>
-                <td>${row.nombre}</td>
-                <td>${row.descripcion}</td>
-                <td><button onclick='traerDatos(${row.id})' type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" >Actualizar</button></td>
-                <td><button class="btn btn-danger" onClick='eliminarClase(${row.id})'>Eliminar</button></td>
-
-            `;
+        <td>${row.id}</td>
+        <td>${row.nombre}</td>
+        <td>${row.descripcion}</td>
+        <td>
+        <button onclick='traerDatos(${row.id})' type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" >Actualizar</button>
+        </td>
+        <td>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmModal-${row.id}">Eliminar</button>
+            <div class="modal fade" id="confirmModal-${row.id}" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel-${row.id}" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="confirmModalLabel">Deseas eliminar este registro</h5>
+                          </div>
+                          <div class="modal-body">
+                            ¿Estás seguro de que deseas continuar?
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button class="btn btn-danger" data-dismiss="modal" onClick='eliminarClase(${row.id})'>Eliminar</button>
+                          </div>
+                        </div>
+                      </div>
+            </div>
+        </td>
+    `;
         tablaDatos.appendChild(tr);
       });
     });
 }
 
-function limpiarFormulario(){
+function limpiarFormulario() {
   var inputCodigo = document.getElementById("id");
   var inputNombre = document.getElementById("nombre");
   var inputDescripcion = document.getElementById("descripcion");
@@ -44,6 +83,7 @@ function eliminarClase(id) {
     .then((data) => {
       console.log(data);
       cargarDatos();
+      mostrarAlerta("Se elimino con exito")
     });
 }
 
@@ -57,9 +97,10 @@ function agregarClase() {
   )
     .then((response) => {
       return response.text();
-
     })
     .then((data) => {
+      cargarDatos();
+      mostrarAlerta("Se agrego con exito")
       console.log(data);
       document.getElementById("id").value = "";
       document.getElementById("nombre").value = "";
@@ -89,8 +130,20 @@ function traerDatos(id) {
     var valDescripcion = inputDescripcion.value;
     limpiarFormulario();
     guardarClase(valId, valNombre, valDescripcion);
+    mostrarAlerta("Se actualizo con exito")
   };
 }
+
+function mostrarAlerta(mensaje) {
+  var alerta = document.getElementById("alerMessange");
+  alerta.innerHTML = mensaje;
+  alerta.hidden = false;
+
+  setTimeout(function() {
+    alerta.hidden = true;
+  }, 1000); 
+}
+
 
 cargarDatos();
 
